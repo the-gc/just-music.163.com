@@ -2,7 +2,7 @@ import React from 'react'
 
 function Rank(props) {
     return (
-        <div>Home</div>
+        <div>Rank</div>
     )
 }
 
