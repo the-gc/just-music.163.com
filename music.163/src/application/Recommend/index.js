@@ -1,7 +1,8 @@
 import React from 'react'
 import Slider from '../../components/slider/index'
 import RecommendList from '../../components/list'
-
+import Scroll from '../../components/Scroll'
+import {Content} from './style'
 function Recommend(props) {
     // mock数据
     const bannerList = [1,2,3,4].map(item => {
@@ -18,10 +19,14 @@ function Recommend(props) {
     });
 
     return (
-        <div>
-            <div><Slider bannerList={bannerList}></Slider></div>
-            <RecommendList recommendList={recommendList}></RecommendList>    
-        </div>
+        <Content>
+            <Scroll className="list">
+                <div>
+                    <div><Slider bannerList={bannerList}></Slider></div>
+                    <RecommendList recommendList={recommendList}></RecommendList>    
+                </div>  
+            </Scroll>
+        </Content>
     )
 }
 
