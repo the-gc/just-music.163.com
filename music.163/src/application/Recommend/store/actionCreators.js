@@ -9,6 +9,11 @@ export const changeBannerList = (data) => ({
     data: fromJS(data)
 });
 
+export const changeEnterLoading = (data) => ({
+    type: actionTypes.CHANGE_ENTER_LOADING,
+    data
+});
+
 export const changeRecommendList = (data) => ({
     type: actionTypes.CHANGE_RECOMMAND_LIST,
     data: fromJS(data)

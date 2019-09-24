@@ -23,3 +23,8 @@ npm install redux redux-thunk redux-immutable react-redux immutable --save
 npm install swiper --save
 
 ```
+
+* 图片懒加载 react-lazyload
+```
+npm install react-lazyload --save
+```
