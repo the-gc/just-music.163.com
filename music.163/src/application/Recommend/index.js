@@ -32,8 +32,8 @@ function Recommend(props) {
         <Content>
             <Scroll className="list">
                 <div>
-                    <div><Slider bannerList={bannerList}></Slider></div>
-                    <RecommendList recommendList={recommendList}></RecommendList>    
+                    <div><Slider bannerList={bannerListJS}></Slider></div>
+                    <RecommendList recommendList={recommendListJS}></RecommendList>    
                 </div>  
             </Scroll>
         </Content>
