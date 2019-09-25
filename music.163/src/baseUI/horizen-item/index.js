@@ -34,9 +34,21 @@ const ListItem = styled.span`
 function Horizen(props) {
     const { list, oldVal, title } = props;
     const { handleClick } = props;
+    const Category = useRef(null);
+
+    useEffect(() => {
+        let categoryDOM = Category.current;
+        let tagElems = categoryDOM.querySelectorAll('span');
+        let totalWidth = 0;
+        Array.from(tagElems).forEach(ele => {
+            totalWidth += ele.offsetWidth;
+        });
+        categoryDOM.style.width = `${totalWidth}px`;
+    }, [])
+
     return (
         <Scroll direction={"horizental"}>
-            <div>
+            <div ref={Category}>
                 <List>
                     <span>{title}</span>
                     {
