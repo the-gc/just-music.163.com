@@ -13,6 +13,8 @@ import {
     changePullDownLoading,
     changePullUpLoading,
     refreshMoreHotSingerList,
+    pullDownRefreshDispatch,
+    pullUpRefreshDispatch
  } from "./store/actionCreators";
 
 
@@ -40,6 +42,14 @@ function Singer(props) {
         setCategory(val);
         updateDispatch(val, alpha);
     }
+
+    const handlePullUp = () => {
+        pullUpRefreshDispatch(category, alpha, category === '', pageCount);
+      };
+      
+      const handlePullDown = () => {
+        pullDownRefreshDispatch(category, alpha);
+      };
 
     const renderSingerList = () => {
         const {singerList} = props;
@@ -76,7 +86,12 @@ function Singer(props) {
                   title={"首字母："}></Horizen>
             </NavContainer>
             <ListContainer>
-                <Scroll>
+                <Scroll
+                  pullUp={ handlePullUp }
+                  pullDown = { handlePullDown }
+                  pullUpLoading = { pullUpLoading }
+                  pullDownLoading = { pullDownLoading }
+                >
                     {renderSingerList()}
                 </Scroll>
             </ListContainer>
