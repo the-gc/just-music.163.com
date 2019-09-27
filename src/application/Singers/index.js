@@ -13,8 +13,6 @@ import {
     changePullDownLoading,
     changePullUpLoading,
     refreshMoreHotSingerList,
-    pullDownRefreshDispatch,
-    pullUpRefreshDispatch
  } from "./store/actionCreators";
 
 
@@ -44,12 +42,12 @@ function Singer(props) {
     }
 
     const handlePullUp = () => {
-        pullUpRefreshDispatch(category, alpha, category === '', pageCount);
+        //pullUpRefreshDispatch(category, alpha, category === '', pageCount);
       };
       
-      const handlePullDown = () => {
-        pullDownRefreshDispatch(category, alpha);
-      };
+    const handlePullDown = () => {
+        //pullDownRefreshDispatch(category, alpha);
+    };
 
     const renderSingerList = () => {
         const {singerList} = props;
