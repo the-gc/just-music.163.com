@@ -66,12 +66,10 @@ export const refreshMoreHotSingerList = () => {
     }
 }
 
-
-
 // 第一次加载对应类别的歌手
 export const getSingerList = (category, alpha) => {
     return (dispatch, getState) => {
-        getHotSingerListRequest(category, alpha, 0).then(res => {
+        getSingerListRequest(category, alpha, 0).then(res => {
             const data = res.artists;
             dispatch(changeSingerList(data));
             dispatch(changeEnterLoading(false));

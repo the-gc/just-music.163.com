@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { connect } from "react-redux";
 import Scroll from '../../components/Scroll'
 import Horizen from "../../baseUI/horizen-item";
-import { categoryTypes, alphaTypes} from "../../api/config";
-import { NavContainer, List, ListItem, ListContainer} from './style'
+import { categoryTypes, alphaTypes } from "../../api/config";
+import { NavContainer, List, ListItem, ListContainer } from './style'
 import { 
     getSingerList,
     getHotSingerList,
@@ -29,13 +29,17 @@ import {
  
 function Singer(props) {
     const { singerList, pageCount, pullUpLoading, pullDownLoading, enterLoading} = props;
-    const {updateDispatch} = props;
+    const { updateDispatch } = props;
+
     let [category, setCategory] = useState('');
     let [alpha, setAlpha] = useState('');
+
+    // 获取首字母
     let handleUpdateAlpha = (val) => {
         setAlpha(val);
         updateDispatch(category, val);
     }
+    // 获取分类
     let handleUpdateCategory = (val) => {
         setCategory(val);
         updateDispatch(val, alpha);
@@ -51,10 +55,11 @@ function Singer(props) {
 
     const renderSingerList = () => {
         const {singerList} = props;
+        var singerListJS = singerList.toJS();
         return (
             <List>
                 {
-                    singerList.map((item, index) => {
+                    singerListJS.map((item, index) => {
                         return (
                             <ListItem key={item.accountId + ' ' + index}>
                                 <div className="img_wrapper">
@@ -74,12 +79,12 @@ function Singer(props) {
             <NavContainer>
                 <Horizen 
                   list={categoryTypes} 
-                  handleClick={(val) => handleUpdateCategory(val)}
+                  handleClick={(val) => handleUpdateCategory(val['key'])}
                   oldVal={category}
                   title={"分类(默认热门：)"}></Horizen>
                 <Horizen 
                   list={alphaTypes} 
-                  handleClick={(val) => handleUpdateAlpha(val)}
+                  handleClick={(val) => {handleUpdateAlpha(val['key'])}}
                   oldVal={alpha}
                   title={"首字母："}></Horizen>
             </NavContainer>
@@ -106,6 +111,7 @@ const mapStateTopProps = (state) => ({
     pageCount: state.getIn(['singers', 'pageCount'])
 });
 
+// 映射 dispatch 到 props 上
 const mapDispatchToProps = (dispatch) => {
     return {
         getHotSingerDispatch() {
