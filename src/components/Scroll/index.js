@@ -1,9 +1,11 @@
-import React , {forwardRef, useState, useEffect, useRef, useImperativeHandle} from 'react'
+import React , {forwardRef, useState, useEffect, useRef, useImperativeHandle, useMemo} from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import B_Scroll from 'better-scroll'
 import Loading from '../loading/index'
 import Loding2 from '../loadingV2/index'
+import { debounce } from '../../api/utils'
+import BScroll from '@better-scroll/core';
 
 
 const ScrollContainer = styled.div`
@@ -42,6 +44,14 @@ const Scroll = forwardRef((props, ref) => {
 
     const {pullDownLoading, pullUpLoading} = props;
 
+    let pullUpDebounce = useMemo(() => {
+        return debounce(pullUp, 300)
+    }, [pullUp]);  // 该处不可省略依赖
+
+    let pullDownDebounce = useMemo(() => {
+        return debounce(pullDown, 300)
+    }, [pullDown]);
+
     useEffect(() => {
         const scroll = new B_Scroll(scrollContainerRef.current, {
             scrollX: direction === 'horizental',
@@ -76,13 +86,13 @@ const Scroll = forwardRef((props, ref) => {
         b_Scroll.on('scrollEnd', () => {
             // 判断是否滑动到了底部
             if (b_Scroll.y <= b_Scroll.maxScrollY + 100) {
-                pullUp();
+                pullUpDebounce();
             }
         });
         return () => {
             b_Scroll.off('scrollEnd');
         }
-    }, [pullUp, b_Scroll]);
+    }, [pullUp, pullUpDebounce, b_Scroll]);
 
     // 进行下拉的判断， 调用下拉刷新的函数
     useEffect(() => {
@@ -90,14 +100,14 @@ const Scroll = forwardRef((props, ref) => {
         b_Scroll.on('touchEnd', (pos) => {
             // 判断用户的下拉动作
             if (pos.y > 50) {
-                pullDown();
+                pullDownDebounce();
             }
         });
 
         return () => {
             b_Scroll.off('touchEnd');
         }
-    }, [pullDown, b_Scroll]);
+    }, [pullDown, pullDownDebounce, b_Scroll]);
 
     useEffect(() => {
         if (refresh && b_Scroll) {

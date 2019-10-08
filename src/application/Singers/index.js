@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect} from 'react'
 import { connect } from "react-redux";
 import Scroll from '../../components/Scroll'
 import Horizen from "../../baseUI/horizen-item";
@@ -29,7 +29,7 @@ import {
  
 function Singer(props) {
     const { singerList, pageCount, pullUpLoading, pullDownLoading, enterLoading} = props;
-    const { updateDispatch } = props;
+    const { updateDispatch, getHotSinger} = props;
 
     let [category, setCategory] = useState('');
     let [alpha, setAlpha] = useState('');
@@ -44,6 +44,12 @@ function Singer(props) {
         setCategory(val);
         updateDispatch(val, alpha);
     }
+
+    useEffect(() => {
+        if(!singerList.length && !category && !alpha) {
+            getHotSinger();
+        }
+    }, []);
 
     const handlePullUp = () => {
         //pullUpRefreshDispatch(category, alpha, category === '', pageCount);
@@ -114,7 +120,7 @@ const mapStateTopProps = (state) => ({
 // 映射 dispatch 到 props 上
 const mapDispatchToProps = (dispatch) => {
     return {
-        getHotSingerDispatch() {
+        getHotSinger() {
             dispatch(getHotSingerList())
         },
         updateDispatch(category, alpha) {
