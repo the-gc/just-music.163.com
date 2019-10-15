@@ -1,7 +1,7 @@
 import React , { useEffect} from 'react'
 import { connect } from "react-redux"
 import { getRankList } from './store'
-import { filterIndex } from "../../api/utils"
+import { filterIndex, filterIdx } from "../../api/utils"
 import Scroll from '../../components/Scroll'
 import { List, ListItem, SongList, Container} from './style'
 
@@ -14,13 +14,23 @@ function Rank(props) {
 
 
     useEffect(() => {
-        getRankListDataDispatch();
+        if (!rankList.length) {
+            getRankListDataDispatch();
+        }
     }, []);
 
     let globalStartIndex = filterIndex(rankList);
     let officialList = rankList.slice(0, globalStartIndex);
     let globalList = rankList.slice(globalStartIndex);
 
+    const enterDetail = (name) => {
+        const idx = filterIdx(name);
+        if(idx === null) {
+            alert('暂无相关数据');
+            return 
+        }
+        // 跳转操作
+    }
 
     const renderRankList = (list, global) => {
         return (
@@ -31,13 +41,13 @@ function Rank(props) {
                             <ListItem 
                               key={item.coverImgId} 
                               tracks={item.tracks}
-                              onClick={() => {}}>
+                              onClick={() => {enterDetail(item.name)}}>
                                 <div className="img_wrapper">
                                     <img src={item.coverImgUrl} alt=""/>
                                     <div className="decorate"></div>
                                     <span className="update_frequecy">{item.updateFrequency}</span>
                                 </div>
-                                
+                                {renderSongList(item.tracks)}
                             </ListItem>
                         )
                     })
