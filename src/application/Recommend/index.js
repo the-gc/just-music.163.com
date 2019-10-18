@@ -24,7 +24,6 @@ function Recommend(props) {
 
     const bannerListJS = bannerList ? bannerList.toJS() : [];
     const recommendListJS = recommendList ? recommendList.toJS() : [];
-    console.log(props.route);
     return (
         <Content>
             <Scroll className="list" onScroll={forceCheck}>
