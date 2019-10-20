@@ -110,8 +110,12 @@ function Album(props) {
                 <Header title={"返回"} handleClick={handleback}></Header>
                 <Scroll bounceTop={currentAlbum.coverImgUrl}>
                     <div>
-                        <TopDesc>
-                            
+                        <TopDesc background={currentAlbum.coverImgUrl}>
+                            <div className="background">
+                                <div className="filter"></div>
+                            </div>
+                            <div>
+                            </div>
                         </TopDesc>
                     </div>
                 </Scroll>
