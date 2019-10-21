@@ -3,6 +3,7 @@ import { Container, TopDesc, Menu} from "./style"
 import { CSSTransition } from 'react-transition-group'
 import Header from '../../baseUI/header/index'
 import Scroll from '../../components/Scroll/index'
+import { SongList } from "../Rank/style"
 
 /*
 切入动画
@@ -114,9 +115,47 @@ function Album(props) {
                             <div className="background">
                                 <div className="filter"></div>
                             </div>
-                            <div>
+                            <div className="img_wrapper">
+                                <div className="decorate"></div>
+                                <img src={currentAlbum.coverImgUrl} alt="" />
+                                <div className="play_count">
+                                    <i className="fa"></i>
+                                    <span className="count">{Math.floor(currentAlbum.subscribedCount/1000)/10}万</span>
+                                </div>
+                            </div>
+                            <div className="desc_wrapper">
+                                <div className="title">{currentAlbum.name}</div>
+                                <div className="person">
+                                    <div className="avatar">
+                                        <img src={currentAlbum.creator.avatarUrl} alt=""/>
+                                    </div>
+                                    <div name="name">{currentAlbum.creator.nickname}</div>
+                                </div>
                             </div>
                         </TopDesc>
+                        <Menu>
+                            <div>
+                                <i className="fa"></i>
+                                评论
+                            </div>
+                            <div>
+                                <i className="fa"></i>
+                                点赞
+                            </div>
+                            <div>
+                                <i className="fa"></i>
+                                收藏
+                            </div>
+                            <div>
+                                <i className="fa"></i>
+                                更多
+                            </div>
+                        </Menu>
+                        <SongList>
+                            <div className="first_line">
+                                
+                            </div>
+                        </SongList>
                     </div>
                 </Scroll>
             </Container>
