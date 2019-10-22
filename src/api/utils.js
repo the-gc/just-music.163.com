@@ -44,3 +44,12 @@ export const filterIdx = name => {
         }
     }
 }
+
+export const getName = list => {
+    let str = "";
+    list.map((item, index) => {
+        str += index === 0 ? list.name : "/" + item.name;
+        return item;
+    });
+    return str
+}

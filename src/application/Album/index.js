@@ -1,22 +1,45 @@
 import React, {useState} from "react"
-import { Container, TopDesc, Menu} from "./style"
+import { Container, TopDesc, Menu, SongList, SongItem} from "./style"
 import { CSSTransition } from 'react-transition-group'
 import Header from '../../baseUI/header/index'
 import Scroll from '../../components/Scroll/index'
-import { SongList } from "../Rank/style"
+import style from "../../assets/global-style";
+import { getName, getCount} from "../../api/utils";
 
 /*
 切入动画
 设定transfrom的固定点，接下来的动画都是绕这个点旋转或平移
 设置rotateZ的值，让整个页面能够拥有Z坐标方向的矢量
 */
+// export const HEADER_HEIGHT = 45;
+// const handleScroll = (pos) => {
+//   let minScrollY = -HEADER_HEIGHT;
+//   let percent = Math.abs(pos.y/minScrollY);
+//   let headerDom = headerEl.current;
+//   //滑过顶部的高度开始变化
+//   if(pos.y < minScrollY) {
+//     headerDom.style.backgroundColor = style["theme-color"];
+//     headerDom.style.opacity = Math.min(1, (percent-1)/2);
+//     setTitle(currentAlbum.name);
+//     setIsMarquee(true);
+//   } else{
+//     headerDom.style.backgroundColor = "";
+//     headerDom.style.opacity = 1;
+//     setTitle("歌单");
+//     setIsMarquee(false);
+//   }
+// };
 
 function Album(props) {
     const [showState, setShowState] = useState(true);
 
+    // const [title, setTitle] = useState("歌单");
+    // const [isMarquee, setIsMarquee] = useState(false);//是否跑马灯
+
+    // const headerEl = useRef();
     const handleback = () => {
         setShowState(false);
-    }
+    };
     // mock 数据
     const currentAlbum = {
         creator: {
@@ -153,8 +176,32 @@ function Album(props) {
                         </Menu>
                         <SongList>
                             <div className="first_line">
-                                
+                            <div className="play_all">
+                                <i className="iconfont">&#xe6e3;</i>
+                                <span>播放全部 <span className="sum">(共{currentAlbum.tracks.length}首)</span></span>
+                                </div>
+                                <div className="add_list">
+                                <i className="iconfont">&#xe62d;</i>
+                                <span>收藏({getCount(currentAlbum.subscribedCount)})</span>
+                                </div>
                             </div>
+                            <SongItem>
+                                {
+                                currentAlbum.tracks.map((item, index) => {
+                                    return (
+                                    <li key={index}>
+                                        <span className="index">{index + 1}</span>
+                                        <div className="info">
+                                        <span>{item.name}</span>
+                                        <span>
+                                            { getName(item.ar) } - { item.al.name }
+                                        </span>
+                                        </div>
+                                    </li>
+                                    )
+                                })
+                                }
+                            </SongItem>
                         </SongList>
                     </div>
                 </Scroll>
